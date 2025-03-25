@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LIFF 發送訊息</title>
+    <script src="https://static.line-scdn.net/liff/edge/2.1/sdk.js"></script>
+</head>
+<body>
+    <h1>歡迎來到 LIFF 應用</h1>
+    <script>
+        async function sendMessage() {
+            // 初始化 LIFF
+            await liff.init({ liffId: "2007116810-r5MJRQ1j" });
+            
+            // 解析 URL 參數，獲取 'keyword' 參數
+            const urlParams = new URLSearchParams(window.location.search);
+            const keyword = urlParams.get('keyword');  // 例如： '1-1', '1-2', '2-1' 等
+            
+            // 根據不同的 keyword 發送不同的訊息
+            let message = '';
+            switch (keyword) {
+                case '1-1':
+                    message = '1-1';
+                    break;
+                case '1-2':
+                    message = '1-2';
+                    break;
+                case '1-3':
+                    message = '1-3';
+                    break;
+                case '2-1':
+                    message = '2-1';
+                    break;
+                case '2-2':
+                    message = '2-2';
+                    break;
+                case '2-3':
+                    message = '2-3';
+                    break;
+                case '03':
+                    message = '03';
+                    break;
+                case '05':
+                    message = '05';
+                    break;
+                case '06':
+                    message = '06';
+                    break;
+                case '7-1':
+                    message = '7-1';
+                    break;
+                case '7-2':
+                    message = '7-2';
+                    break;
+                case '8-1':
+                    message = '8-1';
+                    break;
+                case '8-2':
+                    message = '8-2';
+                    break;
+                case '9-1':
+                    message = '9-1';
+                    break;
+                case '9-2':
+                    message = '9-2';
+                    break;
+                case '10-1':
+                    message = '10-1';
+                    break;
+                case '10-2':
+                    message = '10-2';
+                    break;
+                case '11-1':
+                    message = '11-1';
+                    break;
+                case '11-2':
+                    message = '11-2';
+                    break;
+                case '12-1':
+                    message = '12-1';
+                    break;
+                case '12-2':
+                    message = '12-2';
+                    break;
+                case '13-1':
+                    message = '13-1';
+                    break;
+                case '13-2':
+                    message = '13-2';
+                    break;
+                case '15':
+                    message = '15';
+                    break;
+                case '16':
+                    message = '16';
+                    break;
+                case '17':
+                    message = '17';
+                    break;
+                case '18-1':
+                    message = '18-1';
+                    break;
+                case '18-2':
+                    message = '18-2';
+                    break;
+                case '18-3':
+                    message = '18-3';
+                    break;
+                case '19-1':
+                    message = '19-1';
+                    break;
+                case '19-2':
+                    message = '19-2';
+                    break;
+                case '19-3':
+                    message = '19-3';
+                    break;
+                case '20':
+                    message = '20';
+                    break;
+                default:
+                    message = '未知的 NFC 標籤！';
+                    break;
+            }
+            
+            // 檢查用戶是否已登入 LINE
+            if (liff.isLoggedIn()) {
+                // 如果已登入，發送訊息
+                await liff.sendMessages([
+                    {
+                        type: "text",
+                        text: message
+                    }
+                ]);
+                //
+
