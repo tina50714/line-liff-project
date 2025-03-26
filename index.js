@@ -1,3 +1,5 @@
+require('dotenv').config(); // 確保載入 .env
+
 const express = require('express');
 const line = require('@line/bot-sdk');
 const path = require('path');
@@ -6,8 +8,8 @@ const app = express();
 
 // LINE Bot 配置
 const config = {
-  channelAccessToken: process.env.LINE_ACCESS_TOKEN,
-  channelSecret: process.env.LINE_SECRET
+  channelAccessToken: process.env.LINE_CHANNAL_ACCESS_TOKEN,
+  channelSecret: process.env.LINE_CHANNAL_SECRET
 };
 
 const client = new line.Client(config);
