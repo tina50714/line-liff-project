@@ -3,11 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LIFF 發送訊息</title>
+    <title>LIFF 發送關鍵字至 LINE 聊天室</title>
     <script src="https://static.line-scdn.net/liff/edge/2.1/sdk.js"></script>
 </head>
 <body>
     <h1>歡迎來到 LIFF 應用</h1>
+    <button onclick="sendMessage()">發送關鍵字到 LINE 聊天室</button>
     <script>
         async function sendMessage() {
             try {
@@ -57,26 +58,14 @@
                     default: message = '未知的 NFC 標籤！'; break;
                 }
 
-                // 檢查用戶是否已登入 LINE
-                if (liff.isLoggedIn()) {
-                    // 如果已登入，發送訊息
-                    await liff.sendMessages([
-                        {
-                            type: "text",
-                            text: message
-                        }
-                    ]);
-
-                    // 發送成功後，顯示提示並關閉 LIFF
-                    alert("訊息已發送：" + message);
-                    liff.closeWindow();
-                } else {
-                    // 如果用戶尚未登入，則跳轉到登入頁面
-                    liff.login();
+                // 使用 `line://` 協議來啟動 LINE App 並發送訊息
+                const lineMessageUrl = `line://msg/text/${encodeURIComponent(keyword)}`;
+                window.location.href = lineMessageUrl;  // 開啟 LINE 並發送關鍵字訊息
                 }
+
             } catch (error) {
                 console.error("發生錯誤：", error);
-                alert("LIFF 初始化失敗，請檢查 LIFF ID 是否正確！");
+                alert("發送訊息到 LINE App 失敗！");
             }
         }
 
