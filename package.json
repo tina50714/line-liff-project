@@ -1,7 +1,7 @@
 {
   "name": "liff",
   "version": "1.0.0",
-  "main": "index.html",  
+  "main": "index.html",
   "scripts": {
     "start": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -19,6 +19,7 @@
   "homepage": "https://github.com/tina50714/line-liff-project#readme",
   "description": "",
   "dependencies": {
+    "@line/bot-sdk": "^7.7.0",
     "axios": "^1.8.4",
     "express": "^4.21.2",
     "linebot": "^1.6.1"
