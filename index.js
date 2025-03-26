@@ -8,8 +8,8 @@ const app = express();
 
 // LINE Bot 配置
 const config = {
-  channelAccessToken: process.env.LINE_CHANNAL_ACCESS_TOKEN,
-  channelSecret: process.env.LINE_CHANNAL_SECRET
+  channelAccessToken: process.env.LINE_CHANNEL_ACCESS_TOKEN,
+  channelSecret: process.env.LINE_CHANNEL_SECRET
 };
 
 const client = new line.Client(config);
