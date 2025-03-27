@@ -6,6 +6,10 @@ const path = require('path');
 
 const app = express();
 
+app.get('/', (req, res) => {
+  res.send('LIFF Server is running');
+});
+
 // LINE Bot 配置
 const config = {
   channelAccessToken: process.env.LINE_CHANNEL_ACCESS_TOKEN,
