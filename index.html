@@ -1,76 +1,67 @@
 <!DOCTYPE html>
 <html lang="zh-TW">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LIFF 發送關鍵字至 LINE 聊天室</title>
+    <title>LIFF 自動發送關鍵字</title>
     <script src="https://static.line-scdn.net/liff/edge/2.1/sdk.js"></script>
 </head>
+
 <body>
-    <h1>歡迎來到 LIFF 應用</h1>
-    <button onclick="sendMessage()">發送關鍵字到 LINE 聊天室</button>
+    <h1>🚩 正在自動發送，請稍候...</h1>
+
     <script>
-        async function sendMessage() {
+        window.onload = async function () {
             try {
                 // 初始化 LIFF
                 await liff.init({ liffId: "2007116810-r5MJRQ1j" });
 
-                // 解析 URL 參數，獲取 'keyword' 參數
+                // 確認是否在 LINE APP 內
+                if (!liff.isInClient()) {
+                    alert("⚠ 請用 LINE APP 掃 NFC，否則無法自動發送");
+                    return;
+                }
+
+                // 解析 URL keyword
                 const urlParams = new URLSearchParams(window.location.search);
-                const keyword = urlParams.get('keyword');  // 例如： '1-1', '1-2', '2-1' 等
+                const keyword = urlParams.get('keyword');
 
-                // 根據不同的 keyword 發送不同的訊息
-                let message = '';
-                switch (keyword) {
-                    case '1-1': message = '1-1'; break;
-                    case '1-2': message = '1-2'; break;
-                    case '1-3': message = '1-3'; break;
-                    case '2-1': message = '2-1'; break;
-                    case '2-2': message = '2-2'; break;
-                    case '2-3': message = '2-3'; break;
-                    case '03': message = '03'; break;
-                    case '05': message = '05'; break;
-                    case '06': message = '06'; break;
-                    case '7-1': message = '7-1'; break;
-                    case '7-2': message = '7-2'; break;
-                    case '8-1': message = '8-1'; break;
-                    case '8-2': message = '8-2'; break;
-                    case '9-1': message = '9-1'; break;
-                    case '9-2': message = '9-2'; break;
-                    case '10-1': message = '10-1'; break;
-                    case '10-2': message = '10-2'; break;
-                    case '11-1': message = '11-1'; break;
-                    case '11-2': message = '11-2'; break;
-                    case '12-1': message = '12-1'; break;
-                    case '12-2': message = '12-2'; break;
-                    case '13-1': message = '13-1'; break;
-                    case '13-2': message = '13-2'; break;
-                    case '15': message = '15'; break;
-                    case '16': message = '16'; break;
-                    case '17': message = '17'; break;
-                    case '18-1': message = '18-1'; break;
-                    case '18-2': message = '18-2'; break;
-                    case '18-3': message = '18-3'; break;
-                    case '19-1': message = '19-1'; break;
-                    case '19-2': message = '19-2'; break;
-                    case '19-3': message = '19-3'; break;
-                    case '20': message = '20'; break;
-                    default: message = '未知的 NFC 標籤！'; break;
+                if (!keyword) {
+                    alert("⚠ URL 缺少 keyword 參數");
+                    return;
                 }
 
-                // 使用 `line://` 協議來啟動 LINE App 並發送訊息
-                const lineMessageUrl = `line://msg/text/${encodeURIComponent(keyword)}`;
-                window.location.href = lineMessageUrl;  // 開啟 LINE 並發送關鍵字訊息
+                // 驗證可用的關鍵字
+                const validKeywords = [
+                    '1-1', '1-2', '1-3', '2-1', '2-2', '2-3',
+                    '03', '05', '06', '7-1', '7-2', '8-1', '8-2',
+                    '9-1', '9-2', '10-1', '10-2', '11-1', '11-2',
+                    '12-1', '12-2', '13-1', '13-2', '15', '16',
+                    '17', '18-1', '18-2', '18-3', '19-1', '19-2',
+                    '19-3', '20'
+                ];
+
+                if (!validKeywords.includes(keyword)) {
+                    alert("❌ 無效的 keyword：" + keyword);
+                    return;
                 }
+
+                // 發送關鍵字到聊天室
+                await liff.sendMessages([{
+                    type: 'text',
+                    text: keyword
+                }]);
+
+                alert("✅ 已自動發送：" + keyword);
+                liff.closeWindow(); // 自動關閉 LIFF
 
             } catch (error) {
-                console.error("發生錯誤：", error);
-                alert("發送訊息到 LINE App 失敗！");
+                console.error("發送失敗: ", error);
+                alert("❌ 發送失敗，請檢查 LIFF 設定");
             }
         }
-
-        // 頁面載入時自動執行 sendMessage()
-        sendMessage();
     </script>
 </body>
+
 </html>
